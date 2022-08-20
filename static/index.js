@@ -8,7 +8,7 @@ const MODE_NORMAL = 1, MODE_ENDLESS = 2, MODE_PRACTICE = 3;
         (isDesktop ? '#welcome,#GameTimeLayer,#GameLayerBG,#GameScoreLayer.SHADE{position: absolute;}' :
             '#welcome,#GameTimeLayer,#GameLayerBG,#GameScoreLayer.SHADE{position:fixed;}@media screen and (orientation:landscape) {#landscape {display: box; display: -webkit-box; display: -moz-box; display: -ms-flexbox;}}') +
         '</style>');
-    let map = {'f': 1, 'j': 2};
+    let map = {'f': 2, 'j': 1};
     if (isDesktop) {
         document.write('<div id="gameBody">');
         document.onkeydown = function (e) {
@@ -107,12 +107,12 @@ const MODE_NORMAL = 1, MODE_ENDLESS = 2, MODE_PRACTICE = 3;
         let y = ((_gameBBListIndex) % 10) * blockSize;
         f.y = y;
         f.style[transform] = 'translate3D(0,' + f.y + 'px,0)';
-        a.y = -blockSize * Math.floor(f.children.length / 2) + y;
+        a.y = -blockSize * Math.floor(f.children.length / 4) + y;
         a.style[transform] = 'translate3D(0,' + a.y + 'px,0)';
     }
 
     function countBlockSize() {
-        blockSize = body.offsetWidth / 2;
+        blockSize = body.offsetWidth / 4;
         body.style.height = window.innerHeight + 'px';
         GameLayerBG.style.height = window.innerHeight + 'px';
         touchArea[0] = window.innerHeight;
@@ -268,7 +268,7 @@ const MODE_NORMAL = 1, MODE_ENDLESS = 2, MODE_PRACTICE = 3;
         for (let j = 0; j < box.children.length; j++) {
             let r = box.children[j], rstyle = r.style;
             rstyle.left = (j % 4) * blockSize + 'px';
-            rstyle.bottom = Math.floor(j / 2) * blockSize + 'px';
+            rstyle.bottom = Math.floor(j / 4) * blockSize + 'px';
             rstyle.width = blockSize + 'px';
             rstyle.height = blockSize + 'px';
             r.className = r.className.replace(_clearttClsReg, '');
@@ -279,7 +279,7 @@ const MODE_NORMAL = 1, MODE_ENDLESS = 2, MODE_PRACTICE = 3;
                 });
                 r.className += ' t' + (Math.floor(Math.random() * 1000) % 5 + 1);
                 r.notEmpty = true;
-                i = (Math.floor(j / 2) + 1) * 4 + Math.floor(Math.random() * 1000) % 4;
+                i = (Math.floor(j / 4) + 1) * 4 + Math.floor(Math.random() * 1000) % 4;
             } else {
                 r.notEmpty = false;
             }
@@ -287,7 +287,7 @@ const MODE_NORMAL = 1, MODE_ENDLESS = 2, MODE_PRACTICE = 3;
         if (loop) {
             box.style.webkitTransitionDuration = '0ms';
             box.style.display = 'none';
-            box.y = -blockSize * (Math.floor(box.children.length / 2) + (offset || 0)) * loop;
+            box.y = -blockSize * (Math.floor(box.children.length / 4) + (offset || 0)) * loop;
             setTimeout(function () {
                 box.style[transform] = 'translate3D(0,' + box.y + 'px,0)';
                 setTimeout(function () {
@@ -305,7 +305,7 @@ const MODE_NORMAL = 1, MODE_ENDLESS = 2, MODE_PRACTICE = 3;
         for (let i = 0; i < GameLayer.length; i++) {
             let g = GameLayer[i];
             g.y += blockSize;
-            if (g.y > blockSize * (Math.floor(g.children.length / 2))) {
+            if (g.y > blockSize * (Math.floor(g.children.length / 4))) {
                 refreshGameLayer(g, 1, -1);
             } else {
                 g.style[transform] = 'translate3D(0,' + g.y + 'px,0)';
